@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .timetable {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .timetable th, .timetable td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    .timetable th {
+      background-color: #f2f2f2;
+    }
+    .timetable td {
+      width: 14%;
+    }
+  </style>
+</head>
+<header th:replace="~{common/header}"></header>
+<body>
+<div class="container mt-5">
+  <h2 class="text-center">근무 시간표 수정</h2>
+  <form th:action="@{/timetable/save}" method="post">
+    <table class="timetable table table-bordered text-center">
+      <thead>
+      <tr>
+        <th>시간</th>
+        <th th:each="day : ${daysOfWeek}" th:text="${day}"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="timeSlot : ${timeSlots}">
+        <td th:text="${timeSlot}"></td>
+        <td th:each="day, dayStat : ${#numbers.sequence(0, 6)}">
+          <input type="checkbox" th:id="${'timeslot-' + dayStat.index + '-' + timeSlot}"
+                 th:name="timeslots"
+                 th:value="${dayStat.index + '-' + timeSlot}"
+                 th:checked="${timeSlotIds.contains(dayStat.index + '-' + timeSlot)}"/>
+          <label th:for="${'timeslot-' + dayStat.index + '-' + timeSlot}"></label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-center mt-3">
+      <button type="submit" class="btn btn-primary">저장</button>
+      <a th:href="@{/timetable}" class="btn btn-dark">돌아가기</a>
+    </div>
+  </form>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

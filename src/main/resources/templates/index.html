@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="~{common/head :: head}"></head>
+<link rel="stylesheet" th:href="@{/css/pagemain.css}">
+<header th:replace="~{common/header}"></header>
+<body>
+<hr>
+<br>
+<div class="content">
+    <div th:if="${session.isLogin}" class="wrapper">
+        <div class="img-area">
+            <div class="inner-area">
+                <img th:src="@{${session.member['profilePicture']}}" alt="">
+            </div>
+        </div>
+        <div class="icon arrow"><i class="fas fa-arrow-left"></i></div>
+        <div class="icon dots"><i class="fas fa-ellipsis-v"></i></div>
+        <div class="name" th:text="${session.member['nickname']}">알바 이름</div>
+        <div class="about">활동 뱃지</div>
+        <div class="social-icons">
+            <a href="#" class="fb"><img src="" alt=""><i class="fab"></i></a>
+            <a href="#" class="twitter"><img src="" alt=""><i class="fab"></i></a>
+            <a href="#" class="insta"><img src="" alt=""><i class="fab"></i></a>
+            <a href="#" class="yt"><img src="" alt=""><i class="fab"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div th:if="${session.isLogin}">
+    <span th:if="${session.role == T(proj.albamarcketV2.domain.member.MemberRole).CEO}">
+        안녕하세요 ㅅㅏ장님
+    </span>
+        <span th:if="${session.role == T(proj.albamarcketV2.domain.member.MemberRole).ALBA}">
+        안녕하세요 알바님
+    </span>
+    </div>
+</div>
+<div th:replace="~{chat/message}"></div>
+<br>
+<hr>
+<footer th:replace="~{common/footer}"></footer>
+</body>
+</html>

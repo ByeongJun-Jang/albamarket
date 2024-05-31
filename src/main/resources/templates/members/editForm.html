@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head}"></head>
+<header th:replace="~{common/header}"></header>
+<style>
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
+<body>
+<hr>
+<br>
+<div class="container">
+    <div class="py-5 text-center"> <h2>정보 수정</h2>
+    </div>
+    <h4 class="mb-3">회원 정보 수정</h4>
+    <form action="" th:action th:object="${member}" method="post" enctype="multipart/form-data">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}">전체 오류 메시지</p> </div>
+        <div>
+            <label for="loginId">로그인 ID</label>
+            <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
+                   th:errorclass="field-error" readonly>
+            <div class="field-error" th:errors="*{loginId}" />
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}"
+                   class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{password}" />
+        </div>
+        <div>
+            <label for="name">이름</label>
+            <input type="text" id="name" th:field="*{username}" class="form-control"
+                   th:errorclass="field-error" readonly>
+            <div class="field-error" th:errors="*{username}" />
+        </div>
+        <div>
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{nickname}" />
+        </div>
+        <div>
+            <span>성별</span>
+            <br>
+            <label for="genderMale">남성</label>
+            <input type="radio" id="genderMale" name="gender" value="MALE" th:field="*{gender}"/>
+            <label for="genderFemale">여성</label>
+            <input type="radio" id="genderFemale" name="gender" value="FEMALE" th:field="*{gender}"/>
+        </div>
+        <div>
+            <label for="phoneNumber">휴대폰번호</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{phoneNumber}" />
+        </div>
+        <div>
+            <label for="email">이메일</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{email}" />
+        </div>
+        <div>
+            <label for="profilePicture">프로필 사진</label>
+            <input type="file" id="profilePicture" th:field="*{profilePictureFile}" class="form-control" accept="image/*" onchange="previewImage(event)">
+            <img id="profilePreview" th:src="@{${member.profilePicture}}" alt="프로필 사진" class="profile-preview" style="max-width: 250px; margin-top: 10px; border-radius: 3px">
+        </div>
+<!--            <label for="profilePicture">프로필 사진</label>-->
+<!--            <input type="file" id="profilePicture" th:field="*{profilePictureFile}" class="form-control">-->
+<!--            <img th:src="@{${member.profilePicture}}" alt="프로필 사진" style="max-width: 150px; margin-top: 10px;">-->
+        <div>
+            <label for="address">주소</label>
+            <input type="text" id="address" th:field="*{address}" class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{address}" />
+        </div>
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" id="memberCEO" name="gender" value="CEO" th:field="*{memberRole}"/>
+        <input type="hidden" id="memberAlba" name="gender" value="ALBA" th:field="*{memberRole}"/>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='items.html'"
+                        th:onclick="|location.href='@{/}'|" type="button">취소</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<br>
+<hr>
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('profilePreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+</body>
+<footer th:replace="~{common/footer}"></footer>
+</html>

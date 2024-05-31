@@ -1,0 +1,24 @@
+.header_logo{
+    font-family: 'Poor Story',arial;
+    text-align: center;
+}
+.header_nav{
+    text-align: center;
+    margin: 2rem 0;
+}
+.footer_text{
+    padding-top: 10px;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: .6rem;
+}
+.footer_logo{
+    margin-top: 1rem;
+    padding-top: 10px;
+    font-family: 'Poor Story',arial;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head}"></head>
+<header th:replace="~{common/header}"></header>
+<style>
+    .content-view {
+        height: 300px; /* 최대 높이 설정 */
+        overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+        margin-bottom: 20px; /* 아래쪽 여백 */
+        padding: 10px; /* 패딩 */
+        background-color: #f8f9fa; /* 배경색 */
+        border: 1px solid #e9ecef; /* 테두리 */
+        border-radius: 5px; /* 테두리 둥글기 */
+    }
+</style>
+<body>
+<hr>
+<br>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+<!--            게시글 상세-->
+            <h5 class="card-title" th:text="${post.title}">제목</h5>
+        </div>
+        <div class="card-body">
+            <p class="content-view" th:text="${post.content}">내용</p>
+            <p class="card-text">
+                <small class="text-muted">작성자: <span th:text="${post.author.nickname}"></span></small>
+                <small class="text-muted">작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}"></span></small>
+            </p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <form style="margin-right: 15px" th:action="@{'/posts/' + ${post.id} + '/update'}" method="get">
+                <button class="btn btn-primary" type="submit">수정</button>
+            </form>
+            <form th:action="@{'/posts/' + ${post.id} + '/delete'}" method="post">
+                <button class="btn btn-danger" type="submit">삭제</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="card">
+        <div th:each="comment : ${comments}">
+            <div>
+                <p class="card-text-"><small class="text-muted">작성자 : <span th:text="${comment.author.nickname}"></span> </small></p>
+                <p class="card-body" th:text="${comment.content}">댓글 내용</p>
+                <p class="card-text">
+<!--                    <small class="text-muted">작성자 : <span th:text="${comment.author.nickname}"></span> </small>-->
+                    <small class="text-muted">작성일 : <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd')}"></span> </small>
+                </p>
+
+                <!-- 댓글 수정 폼 -->
+                <form th:action="@{'/posts/' + ${post.id} + '/' + ${comment.id} + '/update'}" method="post">
+                    <input type="text" name="content" th:value="${comment.content}" />
+                    <button type="submit">수정</button>
+                </form>
+
+                <!-- 댓글 삭제 폼 -->
+                <form th:action="@{'/posts/' + ${post.id} + '/' + ${comment.id} + '/delete'}" method="post">
+                    <button type="submit">삭제</button>
+                </form>
+            </div>
+        </div>
+
+        <form th:action="@{/posts/{postId}/comments(postId=${post.id})}" method="post">
+            <textarea name="content" required></textarea>
+            <button type="submit">댓글 달기</button>
+        </form>
+    </div>
+    <a href="/posts" class="btn btn-primary">목록으로 돌아가기</a>
+</div>
+<br>
+<hr>
+</body>
+<footer th:replace="~{common/footer}"></footer>
+</html>

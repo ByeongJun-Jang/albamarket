@@ -1,0 +1,16 @@
+<div>
+    <br>
+    <a th:href="@{/}">
+        <div class="header_logo">
+            <h1>알바마켓</h1>
+        </div>
+    </a>
+    <div class="header_nav">
+        <a th:href="@{/posts}"><span>커뮤니티</span></a> |
+        <a th:if="${session.isLogin}" th:href="@{/timetable}"><span>시간표관리 |</span></a>
+        <a th:if="${session.isLogin}" th:href="@{/members/edit}"><span>정보수정 |</span></a>
+        <a th:if="${session.isLogin}" th:href="@{/logout}"><span>로그아웃</span></a>
+        <a th:unless="${session.isLogin}" th:href="@{/login}"><span>로그인 |</span></a>
+        <a th:unless="${session.isLogin}" th:href="@{/members/add}"><span>회원가입</span></a>
+    </div>
+</div>

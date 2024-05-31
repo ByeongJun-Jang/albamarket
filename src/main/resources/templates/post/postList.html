@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head}"></head>
+<header th:replace="~{common/header}"></header>
+<body>
+<hr>
+<br>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>게시판</h2>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>순서</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--             데이터 반복 구문-->
+            <tr th:each="post : ${posts}">
+<!--                <a th:href="@{/post/{id}(id=${post.id})}"></a>-->
+                <td th:text="${post.id}">1</td>
+                <td>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">테스트 제목</a>
+                </td>
+<!--                <td th:text="${post.title}">테스트 제목</td>-->
+                <td th:text="${post.content}">테스트 내용</td>
+                <th th:text="${post.author.nickname}">작성자 닉네임</th>
+                <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">2020-01-01</td>
+<!--                <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd')}">2020-01-01</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/posts/addPost" class="btn btn-primary btn-lg">글 작성</a>
+<!--    <button class="w-10 btn btn-primary btn-lg" type="submit">글 작성</button>-->
+</div>
+<br>
+<hr>
+</body>
+<footer th:replace="~{common/footer}"></footer>
+</html>
